@@ -124,10 +124,11 @@ print(STATUS "CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 CPMAddPackage(
   NAME extras_rsi
   GITHUB_REPOSITORY perriera/extras_rsi
-  VERSION 4.15.0
+  VERSION 4.16.0
   OPTIONS "MAKE_SPDLOG_SHARED OFF"
   OPTIONS "MAKE_EXTRAS_LIBRARY_ONLY ON"
   OPTIONS "MAKE_EXPARX_ARC_LIBRARY_ONLY ON"
+  OPTIONS "MAKE_EXTRAS_ARC_LIBRARY_TOOLS ON"
   OPTIONS "MAKE_EXPARX_RSI_LIBRARY_ONLY ON"
   OPTIONS "MAKE_EXPARX_RSI_LIBRARY_TOOLS ON"
 )
@@ -135,7 +136,7 @@ if(extras_rsi_ADDED)
   #
   # NOTE:  enable c++11 to avoid compilation errors, and force spdlog into release build
   #
-  print(STATUS "Configuring rsi build properties")
+  print(STATUS "Configuring extras_rsi build properties")
   set_target_properties(extras_rsi PROPERTIES CMAKE_BUILD_TYPE Release)
 else()
   print(WARNING "extras_rsi was not configured properly")
