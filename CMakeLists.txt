@@ -115,27 +115,30 @@ print(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 print(STATUS "CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 
 #
-# NOTE: "Include 3rd party libraries, Perry and I maintain an open-source extras C++ library, which
-# is used extensively in ng_monitor, it comes bundled with spdlog, cpr, and nlohmann json. extras has
+# NOTE: "Include 3rd party libraries, Perry and I maintain an open-source extras_rsi C++ library, which
+# is used extensively in ng_monitor, it comes bundled with spdlog, cpr, and nlohmann json. extras_rsi has
 # project options that allow us to control how other libraries it includes are built. for example we
-# can tell extras to build spdlog as a static library (for faster compile times) by settings
+# can tell extras_rsi to build spdlog as a static library (for faster compile times) by settings
 # MAKE_SPDLOG_SHARED OFF" -- Matt Williams, October, 2021
 #
 CPMAddPackage(
-  NAME extras
-  GITHUB_REPOSITORY perriera/extras
-  VERSION 5.22.0
+  NAME extras_rsi
+  GITHUB_REPOSITORY perriera/extras_rsi
+  VERSION 4.15.0
   OPTIONS "MAKE_SPDLOG_SHARED OFF"
   OPTIONS "MAKE_EXTRAS_LIBRARY_ONLY ON"
+  OPTIONS "MAKE_EXPARX_ARC_LIBRARY_ONLY ON"
+  OPTIONS "MAKE_EXPARX_RSI_LIBRARY_ONLY ON"
+  OPTIONS "MAKE_EXPARX_RSI_LIBRARY_TOOLS ON"
 )
-if(extras_ADDED)
+if(extras_rsi_ADDED)
   #
   # NOTE:  enable c++11 to avoid compilation errors, and force spdlog into release build
   #
-  print(STATUS "Configuring extras build properties")
-  set_target_properties(extras PROPERTIES CMAKE_BUILD_TYPE Release)
+  print(STATUS "Configuring rsi build properties")
+  set_target_properties(extras_rsi PROPERTIES CMAKE_BUILD_TYPE Release)
 else()
-  print(WARNING "extras was not configured properly")
+  print(WARNING "extras_rsi was not configured properly")
 endif()
 
 #
@@ -150,7 +153,7 @@ file(GLOB_RECURSE NG_MONITOR_SOURCE CONFIGURE_DEPENDS "${SOURCES}/*.cpp")
 #
 add_library(${PROJECT_NAME} SHARED ${NG_MONITOR_HEADERS} ${NG_MONITOR_SOURCE})
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
-target_link_libraries(${PROJECT_NAME} PRIVATE stdc++fs extras)
+target_link_libraries(${PROJECT_NAME} PRIVATE stdc++fs extras_rsi extras_arc extras)
 
 #
 # NOTE: declare unit test cases here all source should have adequate test cases whether they be mock
@@ -163,7 +166,7 @@ if (NOT MAKE_NG_MONITOR_LIBRARY_ONLY)
     set(TEST_EXEC "run-unittests-${PROJECT_NAME}")
     add_executable(${TEST_EXEC} ${NG_MONITOR_TESTS})
     target_include_directories(${TEST_EXEC} PUBLIC ${INCLUDES})
-    target_link_libraries(${TEST_EXEC} PRIVATE ${PROJECT_NAME} stdc++fs extras )
+    target_link_libraries(${TEST_EXEC} PRIVATE ${PROJECT_NAME} stdc++fs extras_rsi extras_arc extras)
   endif()
 endif()
 
@@ -176,7 +179,7 @@ endif()
 if( NOT MAKE_NG_MONITOR_LIBRARY_ONLY OR MAKE_NG_MONITOR_LIBRARY_EXECUTABLES)
 add_executable(main instances/main.cpp) 
 target_include_directories(main PUBLIC ${INCLUDES})
-target_link_libraries(main PRIVATE ${PROJECT_NAME} stdc++fs extras )
+target_link_libraries(main PRIVATE ${PROJECT_NAME} stdc++fs extras_rsi )
 endif()
 
 #
