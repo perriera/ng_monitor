@@ -124,7 +124,7 @@ print(STATUS "CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 CPMAddPackage(
   NAME extras_mon
   GITHUB_REPOSITORY perriera/extras_mon
-  VERSION 0.3.0
+  VERSION 0.4.0
   OPTIONS "MAKE_SPDLOG_SHARED OFF"
   OPTIONS "MAKE_EXTRAS_LIBRARY_ONLY ON"
   OPTIONS "MAKE_EXPARX_ARC_LIBRARY_ONLY ON"
@@ -180,9 +180,9 @@ endif()
 # declarations seperate, we place any sources that have a main() in the instances/ folder
 #
 if( NOT MAKE_NG_MONITOR_LIBRARY_ONLY OR MAKE_NG_MONITOR_LIBRARY_TOOLS)
-add_executable(main2 instances/main.cpp) 
-target_include_directories(main2 PUBLIC ${INCLUDES})
-target_link_libraries(main2 PRIVATE ${PROJECT_NAME} stdc++fs extras_mon extras_rsi extras_arc extras)
+add_executable(ngm instances/main.cpp) 
+target_include_directories(ngm PUBLIC ${INCLUDES})
+target_link_libraries(ngm PRIVATE ${PROJECT_NAME} stdc++fs extras_mon extras_rsi extras_arc extras)
 endif()
 
 #
