@@ -66,7 +66,7 @@ option(NG_MONITOR_PRODUCTION "Production build" OFF)
 # tested for use with NG_MONITOR_PRODUCTION flag. So, there might be 
 # a hiccup in here that needs to be worked out, (reader beware).
 #
-# see also MAKE_NG_MONITOR_LIBRARY_EXECUTABLES
+# see also MAKE_NG_MONITOR_LIBRARY_TOOLS
 #
 # This second flag will allow both the shared libraries and any executatbles
 # (but not the unit tests) to be compiled.
@@ -122,24 +122,26 @@ print(STATUS "CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 # MAKE_SPDLOG_SHARED OFF" -- Matt Williams, October, 2021
 #
 CPMAddPackage(
-  NAME extras_rsi
-  GITHUB_REPOSITORY perriera/extras_rsi
-  VERSION 4.16.0
+  NAME extras_mon
+  GITHUB_REPOSITORY perriera/extras_mon
+  VERSION 0.3.0
   OPTIONS "MAKE_SPDLOG_SHARED OFF"
   OPTIONS "MAKE_EXTRAS_LIBRARY_ONLY ON"
   OPTIONS "MAKE_EXPARX_ARC_LIBRARY_ONLY ON"
   OPTIONS "MAKE_EXTRAS_ARC_LIBRARY_TOOLS ON"
   OPTIONS "MAKE_EXPARX_RSI_LIBRARY_ONLY ON"
   OPTIONS "MAKE_EXPARX_RSI_LIBRARY_TOOLS ON"
+  OPTIONS "MAKE_EXPARX_MON_LIBRARY_ONLY ON"
+  OPTIONS "MAKE_EXPARX_MON_LIBRARY_TOOLS ON"
 )
-if(extras_rsi_ADDED)
+if(extras_mon_ADDED)
   #
   # NOTE:  enable c++11 to avoid compilation errors, and force spdlog into release build
   #
-  print(STATUS "Configuring extras_rsi build properties")
+  print(STATUS "Configuring extras_mon build properties")
   set_target_properties(extras_rsi PROPERTIES CMAKE_BUILD_TYPE Release)
 else()
-  print(WARNING "extras_rsi was not configured properly")
+  print(WARNING "extras_mon was not configured properly")
 endif()
 
 #
@@ -154,7 +156,7 @@ file(GLOB_RECURSE NG_MONITOR_SOURCE CONFIGURE_DEPENDS "${SOURCES}/*.cpp")
 #
 add_library(${PROJECT_NAME} SHARED ${NG_MONITOR_HEADERS} ${NG_MONITOR_SOURCE})
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
-target_link_libraries(${PROJECT_NAME} PRIVATE stdc++fs extras_rsi extras_arc extras)
+target_link_libraries(${PROJECT_NAME} PRIVATE stdc++fs extras_mon extras_rsi extras_arc extras)
 
 #
 # NOTE: declare unit test cases here all source should have adequate test cases whether they be mock
@@ -167,7 +169,7 @@ if (NOT MAKE_NG_MONITOR_LIBRARY_ONLY)
     set(TEST_EXEC "run-unittests-${PROJECT_NAME}")
     add_executable(${TEST_EXEC} ${NG_MONITOR_TESTS})
     target_include_directories(${TEST_EXEC} PUBLIC ${INCLUDES})
-    target_link_libraries(${TEST_EXEC} PRIVATE ${PROJECT_NAME} stdc++fs extras_rsi extras_arc extras)
+    target_link_libraries(${TEST_EXEC} PRIVATE ${PROJECT_NAME} stdc++fs extras_mon extras_rsi extras_arc extras)
   endif()
 endif()
 
@@ -177,10 +179,10 @@ endif()
 # includes ALL headers and sources under include/ and src/. So, to keep two or more main() 
 # declarations seperate, we place any sources that have a main() in the instances/ folder
 #
-if( NOT MAKE_NG_MONITOR_LIBRARY_ONLY OR MAKE_NG_MONITOR_LIBRARY_EXECUTABLES)
-add_executable(main instances/main.cpp) 
-target_include_directories(main PUBLIC ${INCLUDES})
-target_link_libraries(main PRIVATE ${PROJECT_NAME} stdc++fs extras_rsi )
+if( NOT MAKE_NG_MONITOR_LIBRARY_ONLY OR MAKE_NG_MONITOR_LIBRARY_TOOLS)
+add_executable(main2 instances/main.cpp) 
+target_include_directories(main2 PUBLIC ${INCLUDES})
+target_link_libraries(main2 PRIVATE ${PROJECT_NAME} stdc++fs extras_mon extras_rsi extras_arc extras)
 endif()
 
 #

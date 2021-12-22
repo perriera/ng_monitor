@@ -5,7 +5,7 @@
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
 >
-> > git tag -a v0.4.0 -m " Using extras_rsi v4.16.0"</br>
+> > git tag -a v0.4.0 -m " Using extras_mon v0.3.0"</br>
 > > git push origin v0.4.0
 
 IMPORTANT:
@@ -32,7 +32,7 @@ Correct URL for github, (for source compare)</br>
 
 ### Changed
 
-- Using extras_rsi v4.16.0
+- Using extras_mon v0.3.0
 
 #### 0.3.0 (2021-12-21)
 
