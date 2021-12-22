@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_cpp/game/ChessGame.hpp>
+#include <ng_monitor/game/ChessGame.hpp>
 #include <extras/interfaces.hpp>
 #include <iostream>
 

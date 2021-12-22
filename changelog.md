@@ -5,8 +5,8 @@
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
 >
-> > git tag -a v0.1.0 -m " Using extras v5.22.0"</br>
-> > git push origin v0.1.0
+> > git tag -a v0.2.0 -m "Changed project name"</br>
+> > git push origin v0.2.0
 
 IMPORTANT:
 
@@ -27,6 +27,12 @@ Detailed class descriptions in README.md</br>
 Correct URL for github, (for source compare)</br>
 
 ## [Next Steps]
+
+#### 0.2.0 (2021-12-21)
+
+### Changed
+
+- Project name
 
 #### 0.1.0 (2021-08-26)
 
@@ -58,8 +64,6 @@ Correct URL for github, (for source compare)</br>
 - @brief style formatting
 - Doxygen support
 
-[unreleased]: https://github.com/perriera/ng_monitor/compare/v0.1.0...HEAD
-
-# [0.15.0]: https://github.com/perriera/ng_monitor/compare/v0.14.0...v0.15.0
-
+[unreleased]: https://github.com/perriera/ng_monitor/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/perriera/ng_monitor/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/perriera/ng_monitor/releases/tag/v0.1.0
