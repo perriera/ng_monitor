@@ -27,10 +27,10 @@ using namespace fakeit;
 
 SCENARIO("Mock ChessGameInterface: toOctal", "[CHES-9]") {
 
-    Mock<cpp::ChessGameInterface> mock;
+    Mock<ngm::ChessGameInterface> mock;
     When(Method(mock, moves)).Return();
 
-    cpp::ChessGameInterface& i = mock.get();
+    ngm::ChessGameInterface& i = mock.get();
     i.moves();
     Verify(Method(mock, moves));
 }

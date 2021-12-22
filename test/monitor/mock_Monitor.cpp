@@ -17,18 +17,33 @@
  */
 
 #include <iostream>
-#include <ng_monitor/game/ChessGame.hpp>
+#include <ng_monitor/monitor.hpp>
 
 #include "../vendor/catch.hpp"
+#include "../vendor/fakeit.hpp"
 
-using namespace std;
 using namespace extras;
+using namespace fakeit;
 
-SCENARIO("Verify ChessGameInterface can be read PGN file", "[ChessGame]")
-{
-    ngm::ChessGame game;
-    ngm::ChessGameInterface& i = game;
-    i.moves();
-    REQUIRE(true);
+SCENARIO("Mock MonitorInterface", "[MonitorInterface]") {
+
+    bool wasTriggered = false;
+    bool wasExecuted = false;
+    Mock<mon::MonitorInterface> mock;
+    When(Method(mock, event)).AlwaysDo([&wasExecuted]() {
+        wasExecuted = true;
+        });
+    mon::MonitorInterface& i = mock.get();
+    When(Method(mock, trigger)).AlwaysDo([&wasTriggered, &i]() {
+        wasTriggered = true;
+        i.event();
+        });
+
+    REQUIRE(wasTriggered == false);
+    REQUIRE(wasExecuted == false);
+    i.trigger();
+    REQUIRE(wasTriggered == true);
+    REQUIRE(wasExecuted == true);
+    Verify(Method(mock, event));
+    Verify(Method(mock, trigger));
 }
-

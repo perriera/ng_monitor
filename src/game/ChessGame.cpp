@@ -23,5 +23,5 @@
 using namespace std;
 using namespace extras;
 
-void cpp::ChessGame::moves() const {}
+void ngm::ChessGame::moves() const {}
 

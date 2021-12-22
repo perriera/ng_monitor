@@ -1,5 +1,5 @@
 /**
- * @file ChessGame.hpp
+ * @file Monitor.hpp
  * @author Perry Anderson (perry@exparx.com)
  * @brief Sample Header file
  * @version 0.1
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _CHESSGAME_HPP
-#define _CHESSGAME_HPP
+#ifndef _MONITOR_HPP
+#define _MONITOR_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -32,44 +32,30 @@
 
 #include <iostream>
 #include <extras/interfaces.hpp>
+#include <extras_mon/monitor.hpp>
 
 namespace extras {
     namespace ngm {
 
         /**
-         * @brief ChessGameInterface
+         * @brief Monitor
          *
          */
-        interface ChessGameInterface
-        {
+         // concrete class Monitor implements mon::MonitorInterface
+         // {
 
-            /**
-             * @brief moves()
-             * @return all the chess moves of the given chess game
-             */
-            virtual void moves() const pure;
+         //     /**
+         //      * @brief moves()
+         //      * @return all the chess moves of the given chess game
+         //      */
+         //     virtual void event() const override;
 
-        };
+         // };
 
-        /**
-         * @brief ChessGame
-         *
-         */
-        concrete class ChessGame implements ChessGameInterface
-        {
-
-            /**
-             * @brief moves()
-             * @return all the chess moves of the given chess game
-             */
-            virtual void moves() const override;
-
-        };
-
-        /**
-         * @brief EndOfGameReachedException
-         *
-         */
+         /**
+          * @brief EndOfGameReachedException
+          *
+          */
 
         concrete class EndOfGameReachedException
             extends extras::AbstractCustomException {
@@ -89,4 +75,4 @@ namespace extras {
     } // end namespace 
 }
 
-#endif // _CHESSGAME_HPP
+#endif // _MONITOR_HPP
